@@ -24,19 +24,19 @@ public class UnitFollowState : StateMachineBehaviour
         {
             animator.SetBool("isFollowing", false);
         }
-
-        agent.SetDestination(attackController.targetToAttack.position);
-        animator.transform.LookAt(attackController.targetToAttack);
-        float distanceFromTarget = Vector3.Distance(attackController.targetToAttack.position, animator.transform.position);
-        if (distanceFromTarget < attackingDistance)
+        else
         {
-            animator.SetBool("isAttacking", true);
+            if (animator.transform.GetComponent<UnitMovement>().isCommandedToMove == false)
+            {
+                agent.SetDestination(attackController.targetToAttack.position);
+                animator.transform.LookAt(attackController.targetToAttack);
+                //float distanceFromTarget = Vector3.Distance(attackController.targetToAttack.position, animator.transform.position);
+                //if (distanceFromTarget < attackingDistance)
+                //{
+                //    agent.SetDestination(animator.transform.position);     
+                //    animator.SetBool("isAttacking", true);
+                //}
+            }
         }
     }
-
-    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        agent.SetDestination(animator.transform.position);
-    }
-
 }
