@@ -10,4 +10,9 @@ public class Enemy : MonoBehaviour
     {
         health -= damageToInflict;
     }
+
+    internal void TakeDamage(int damageToInflict)
+    {
+        throw new NotImplementedException();
+    }
 }
