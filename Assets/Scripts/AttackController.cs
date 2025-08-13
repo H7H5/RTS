@@ -13,6 +13,7 @@ public class AttackController : MonoBehaviour
     public bool isPlayer;
 
     public int unitDamage;
+    public GameObject muzzleEffect;
 
     private void OnTriggerEnter(Collider other)
     {
