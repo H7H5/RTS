@@ -80,7 +80,6 @@ public class UnitSelectedManager : MonoBehaviour
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, attackable))
             {
-                Debug.Log("Enemy Howered with mouse");
                 attackCursorVisible = true;
                 if (Input.GetMouseButtonDown(1))
                 {
@@ -171,6 +170,6 @@ public class UnitSelectedManager : MonoBehaviour
 
     private void TriggerSelectionIndicator(GameObject unit, bool isVisible)
     {
-        unit.transform.GetChild(0).gameObject.SetActive(isVisible);
+        unit.transform.Find("Indicator").gameObject.SetActive(isVisible);
     }
 }
