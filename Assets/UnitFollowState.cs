@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -29,7 +29,7 @@ public class UnitFollowState : StateMachineBehaviour
         {
             if (animator.transform.GetComponent<UnitMovement>().isCommandedToMove == false)
             {
-                agent.SetDestination(attackController.targetToAttack.position);
+                //agent.SetDestination(attackController.targetToAttack.position);
                 animator.transform.LookAt(attackController.targetToAttack);
                 float distanceFromTarget = Vector3.Distance(attackController.targetToAttack.position, animator.transform.position);
                 if (distanceFromTarget < attackingDistance)

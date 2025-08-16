@@ -8,7 +8,7 @@ public class UnitSelectedManager : MonoBehaviour
     public static UnitSelectedManager Instance { get; set; }
 
     public List<GameObject> allUnitsList = new List<GameObject>();
-    public List<GameObject> unitsSelected = new List<GameObject>();
+    private List<GameObject> unitsSelected = new List<GameObject>();
 
     public LayerMask clickable;
     public LayerMask ground;
@@ -40,6 +40,7 @@ public class UnitSelectedManager : MonoBehaviour
         {
             RaycastHit hit;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, clickable))
             {
                 if (Input.GetKey(KeyCode.LeftShift))
@@ -99,9 +100,32 @@ public class UnitSelectedManager : MonoBehaviour
             }
         }
 
+        CursorSelector();
 
 
+    }
 
+    private void CursorSelector()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if(Physics.Raycast(ray, out hit, Mathf.Infinity, clickable))
+        {
+            CursorManager.Instance.SetMarkerType(CursorManager.CursorType.Selectable);
+        }
+        else if (Physics.Raycast(ray, out hit, Mathf.Infinity, attackable) 
+            && unitsSelected.Count> 0 && AtleastOneOffensiveUnit())
+        {
+            CursorManager.Instance.SetMarkerType(CursorManager.CursorType.Attackable);
+        }
+        else if (Physics.Raycast(ray, out hit, Mathf.Infinity, ground) && unitsSelected.Count > 0)
+        {
+            CursorManager.Instance.SetMarkerType(CursorManager.CursorType.Walkable);
+        }
+        else
+        {
+            CursorManager.Instance.SetMarkerType(CursorManager.CursorType.None);
+        }
     }
 
     private bool AtleastOneOffensiveUnit()

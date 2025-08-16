@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,15 +34,21 @@ public class UnitSelectionBox : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            if (boxVisual.rect.width>0 || boxVisual.rect.height>0)
+            endPosition = Input.mousePosition;
+
+            // Різниця між початком і кінцем > 5 пікселів (запобігає миттєвому вибору)
+            if (Mathf.Abs(endPosition.x - startPosition.x) > 5f ||
+                Mathf.Abs(endPosition.y - startPosition.y) > 5f)
             {
                 UnitSelectedManager.Instance.DeselectAll();
+                DrawVisual();
+                DrawSelection();
                 SelectUnits();
             }
-
-            endPosition = Input.mousePosition;
-            DrawVisual();
-            DrawSelection();
+            else
+            {
+                DrawVisual();
+            }
         }
         if (Input.GetMouseButtonUp(0))
         {
@@ -99,7 +105,7 @@ public class UnitSelectionBox : MonoBehaviour
         {
             if (selectionBox.Contains(cam.WorldToScreenPoint(unit.transform.position)))
             {
-                UnitSelectedManager.Instance.DragSelect(unit);
+                 UnitSelectedManager.Instance.DragSelect(unit);
             }
         }
     }
