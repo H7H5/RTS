@@ -20,7 +20,7 @@ public class CursorManager : MonoBehaviour
 
     private GameObject markerInstance;  // The instantiated marker object
     bool isMarkerActive = false;  // Boolean to control marker activation
-    float markerHeight = 0.0f;  // Height at which the marker should be placed (e.g., ground level)
+    //float markerHeight = 0.0f;  // Height at which the marker should be placed (e.g., ground level)
 
     [Header("Marker Prefabs")]
     public GameObject walkableCursor;

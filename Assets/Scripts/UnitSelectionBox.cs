@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UnitSelectionBox : MonoBehaviour
 {
@@ -27,27 +28,33 @@ public class UnitSelectionBox : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            startPosition = Input.mousePosition;
+            if (!EventSystem.current.IsPointerOverGameObject()) // тільки якщо не по UI
+            {
+                startPosition = Input.mousePosition;
 
-            selectionBox = new Rect();
+                selectionBox = new Rect();
+            }
         }
 
         if (Input.GetMouseButton(0))
         {
-            endPosition = Input.mousePosition;
+            if (!EventSystem.current.IsPointerOverGameObject()) // тільки якщо не по UI
+            {
+                endPosition = Input.mousePosition;
 
-            // Різниця між початком і кінцем > 5 пікселів (запобігає миттєвому вибору)
-            if (Mathf.Abs(endPosition.x - startPosition.x) > 5f ||
-                Mathf.Abs(endPosition.y - startPosition.y) > 5f)
-            {
-                UnitSelectedManager.Instance.DeselectAll();
-                DrawVisual();
-                DrawSelection();
-                SelectUnits();
-            }
-            else
-            {
-                DrawVisual();
+                // Різниця між початком і кінцем > 5 пікселів (запобігає миттєвому вибору)
+                if (Mathf.Abs(endPosition.x - startPosition.x) > 5f ||
+                    Mathf.Abs(endPosition.y - startPosition.y) > 5f)
+                {
+                    UnitSelectedManager.Instance.DeselectAll();
+                    DrawVisual();
+                    DrawSelection();
+                    SelectUnits();
+                }
+                else
+                {
+                    DrawVisual();
+                }
             }
         }
         if (Input.GetMouseButtonUp(0))
