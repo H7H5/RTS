@@ -36,6 +36,7 @@ public class Unit : MonoBehaviour
     private void OnDestroy()
     {
         UnitSelectedManager.Instance.allUnitsList.Remove(gameObject);
+        UnitSelectedManager.Instance.unitsSelected.Remove(gameObject);
     }
 
     internal void TakeDamage(int damageToInflict)

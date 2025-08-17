@@ -28,7 +28,7 @@ public class UnitAttackState : StateMachineBehaviour
         {
             LookAtTarget();
 
-            //agent.SetDestination(attackController.targetToAttack.position);
+            agent.SetDestination(attackController.targetToAttack.position);
 
             if (attackTimer <=0)
             {

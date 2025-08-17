@@ -12,7 +12,6 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         buildButton.onClick.AddListener(() => Construct(0)); // id 0
-
     }
 
     private void Construct(int id)

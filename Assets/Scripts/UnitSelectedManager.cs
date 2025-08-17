@@ -8,7 +8,7 @@ public class UnitSelectedManager : MonoBehaviour
     public static UnitSelectedManager Instance { get; set; }
 
     public List<GameObject> allUnitsList = new List<GameObject>();
-    private List<GameObject> unitsSelected = new List<GameObject>();
+    public List<GameObject> unitsSelected = new List<GameObject>();
 
     public LayerMask clickable;
     public LayerMask ground;
