@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class UnitSelectionBox : MonoBehaviour
 {
@@ -20,6 +21,10 @@ public class UnitSelectionBox : MonoBehaviour
         cam = Camera.main;
         startPosition = Vector2.zero;
         endPosition = Vector2.zero;
+
+        var img = boxVisual.GetComponent<Image>();
+        if (img) img.raycastTarget = false; // критично!
+
         DrawVisual();
     }
 
@@ -28,56 +33,83 @@ public class UnitSelectionBox : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (!EventSystem.current.IsPointerOverGameObject()) // тільки якщо не по UI
+            if (!IsPointerOverBlockingUI()) // тільки якщо не по UI
             {
                 startPosition = Input.mousePosition;
-
+                //endPosition = startPosition;
                 selectionBox = new Rect();
+                DrawVisual();
             }
         }
 
         if (Input.GetMouseButton(0))
         {
-            if (!EventSystem.current.IsPointerOverGameObject()) // тільки якщо не по UI
-            {
-                endPosition = Input.mousePosition;
+                //endPosition = Input.mousePosition;
 
                 // Різниця між початком і кінцем > 5 пікселів (запобігає миттєвому вибору)
-                if (Mathf.Abs(endPosition.x - startPosition.x) > 5f ||
-                    Mathf.Abs(endPosition.y - startPosition.y) > 5f)
+                if (startPosition != Vector2.zero)
                 {
+                    Vector2 currentMouse = Input.mousePosition;
+
+                    selectionBox = new Rect(
+                        Mathf.Min(startPosition.x, currentMouse.x),
+                        Mathf.Min(startPosition.y, currentMouse.y),
+                        Mathf.Abs(startPosition.x - currentMouse.x),
+                        Mathf.Abs(startPosition.y - currentMouse.y)
+                    );
                     UnitSelectedManager.Instance.DeselectAll();
                     DrawVisual();
                     DrawSelection();
-                    SelectUnits();
+                    SelectUnits();   ///////////////////
                 }
                 else
                 {
                     DrawVisual();
                 }
-            }
         }
         if (Input.GetMouseButtonUp(0))
         {
             SelectUnits();
             startPosition = Vector2.zero;
-            endPosition = Vector2.zero;
+            //endPosition = Vector2.zero;
+            selectionBox = new Rect();
             DrawVisual();
         }
     }
 
+
     private void DrawVisual()
     {
-        Vector2 boxStart = startPosition;
-        Vector2 boxEnd = endPosition;
+        if (selectionBox.width > 0 && selectionBox.height > 0)
+        {
+            Vector2 center = new Vector2(selectionBox.x + selectionBox.width / 2,
+                                         selectionBox.y + selectionBox.height / 2);
 
-        Vector2 boxCenter = (boxStart + boxEnd) / 2;
+            boxVisual.position = center;
+            boxVisual.sizeDelta = new Vector2(selectionBox.width, selectionBox.height);
+        }
+        else
+        {
+            boxVisual.sizeDelta = Vector2.zero; // ховаємо, якщо нема прямокутника
+        }
+    }
+    private bool IsPointerOverBlockingUI()
+    {
+        PointerEventData pointerData = new PointerEventData(EventSystem.current);
+        pointerData.position = Input.mousePosition;
 
-        boxVisual.position = boxCenter;
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerData, results);
 
-        Vector2 boxSize = new Vector2(MathF.Abs(boxStart.x - boxEnd.x), MathF.Abs(boxStart.y - boxEnd.y));
-
-        boxVisual.sizeDelta = boxSize;
+        foreach (RaycastResult result in results)
+        {
+            // Перевіряємо, чи це не наші юнітські UI елементи
+            if (!result.gameObject.GetComponentInParent<Unit>())
+            {
+                return true; // це чужий UI → блокуємо
+            }
+        }
+        return false; // або немає UI → можна виділяти
     }
 
     private void DrawSelection()
