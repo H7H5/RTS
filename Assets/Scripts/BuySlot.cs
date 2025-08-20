@@ -11,9 +11,21 @@ public class BuySlot : MonoBehaviour
 
     public bool isAvailable;
 
+    public BuySystem buySystem;
+
+    public int databaseItemID;
+
     private void Start()
     {
         UpdateAvailableUI();
+    }
+
+    public void ClickedOnSlot()
+    {
+        if (isAvailable)
+        {
+            buySystem.placementSystem.StartPlacement(databaseItemID);
+        }
     }
 
     private void UpdateAvailableUI()
