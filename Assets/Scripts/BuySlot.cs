@@ -17,7 +17,10 @@ public class BuySlot : MonoBehaviour
 
     private void Start()
     {
+        ResourceManager.Instance.OnResourceChanged += HandleResourcesChanged;
         HandleResourcesChanged();
+        ResourceManager.Instance.OnBuildingsChanged += HandleBuildingChanged;
+        HandleBuildingChanged();
     }
 
     public void ClickedOnSlot()
@@ -42,20 +45,11 @@ public class BuySlot : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        ResourceManager.Instance.OnResourceChanged += HandleResourcesChanged;
-    }
-    private void OnDisable()
-    {
-        ResourceManager.Instance.OnResourceChanged -= HandleResourcesChanged;
-    }
-
     private void HandleResourcesChanged()
     {
         ObjectData objectData = DatabaseManager.Instance.databseSO.objectsData[databaseItemID];
         bool requirementMet = true;
-        foreach(BuildRequirement req in objectData.requirements)
+        foreach(BuildRequirement req in objectData.resourceRequirements)
         {
             if(ResourceManager.Instance.GetResourceAmount(req.resource)< req.amount)
             {
@@ -66,5 +60,24 @@ public class BuySlot : MonoBehaviour
 
         isAvailable = requirementMet;
         UpdateAvailableUI();
+    }
+
+    private void HandleBuildingChanged()
+    {
+        ObjectData objectData = DatabaseManager.Instance.databseSO.objectsData[databaseItemID];
+        foreach(BuildingType dependency in objectData.buildDependency)
+        {
+            if(dependency == BuildingType.None)
+            {
+                gameObject.SetActive(true);
+                return;
+            }
+            if (ResourceManager.Instance.allExistingBuildings.Contains(dependency)==false)
+            {
+                gameObject.SetActive(false);
+                return;
+            }
+        }
+        gameObject.SetActive(true);
     }
 }
