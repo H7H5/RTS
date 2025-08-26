@@ -85,7 +85,21 @@ public class PlacementState : IBuildingState
 
         GridData selectedData = GetAllFloorIDs().Contains(database.objectsData[selectedObjectIndex].ID) ? floorData : furnitureData;
 
-        return selectedData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size);
+        if(!selectedData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size))
+        {
+            return false;
+        }
+
+        Vector3 worldPosition = grid.CellToWorld(gridPosition);
+        Collider[] colliders = Physics.OverlapBox(worldPosition, new Vector3(.5f, 0.5f, 0.5f), Quaternion.identity);
+        foreach(var collider in colliders)
+        {
+            if (collider.CompareTag("Unit") || collider.CompareTag("Building"))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void UpdateState(Vector3Int gridPosition)
