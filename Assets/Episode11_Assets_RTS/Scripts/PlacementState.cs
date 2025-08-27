@@ -94,7 +94,7 @@ public class PlacementState : IBuildingState
         Collider[] colliders = Physics.OverlapBox(worldPosition, new Vector3(.5f, 0.5f, 0.5f), Quaternion.identity);
         foreach(var collider in colliders)
         {
-            if (collider.CompareTag("Unit") || collider.CompareTag("Building"))
+            if (collider.CompareTag("Unit") || collider.CompareTag("Tree") || collider.CompareTag("Enemy"))
             {
                 return false;
             }
