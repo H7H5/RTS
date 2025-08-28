@@ -134,8 +134,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 7780356504763275997}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -336,6 +336,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   constMaxHealth: 100
   healthTracker: {fileID: 495873547994102050}
+  isEnemy: 0
+  buildingType: 2
 --- !u!1 &2972272063311965749
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,7 +353,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7780356504763275997
 RectTransform:
   m_ObjectHideFlags: 0
@@ -391,7 +393,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7182938099101037193
 RectTransform:
   m_ObjectHideFlags: 0
@@ -479,7 +481,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ffcfbebeaf97aa4f9f533f915fbcfde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  facingCamera: {fileID: 0}
 --- !u!1 &6405938942127800272
 GameObject:
   m_ObjectHideFlags: 0
@@ -604,7 +605,7 @@ RectTransform:
   m_Father: {fileID: 634767743995128890}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -4.894989, y: 0}
   m_SizeDelta: {x: 0.21, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

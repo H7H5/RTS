@@ -15,6 +15,7 @@ public class Constructable : MonoBehaviour, IDamageable
 
     NavMeshObstacle obstacle;
 
+    public BuildingType buildingType;
     private void Start()
     {
         constHealth = constMaxHealth;
@@ -26,6 +27,8 @@ public class Constructable : MonoBehaviour, IDamageable
         healthTracker.UpdateSliderValue(constHealth, constMaxHealth);
         if(constHealth <= 0)
         {
+            ResourceManager.Instance.UpdateBuildingsChanged(buildingType, false);
+
             Destroy(gameObject);
         }
     }
@@ -38,15 +41,16 @@ public class Constructable : MonoBehaviour, IDamageable
 
     public void ConstructableWasPlaced()
     {
-         ActivateObstacle();
-    }
-
-    private void ActivateObstacle()
-    {
+        healthTracker.gameObject.SetActive(true);
+        ActivateObstacle();
         if (isEnemy)
         {
             gameObject.tag = "Enemy";
         }
+    }
+
+    private void ActivateObstacle()
+    {
         obstacle = GetComponentInChildren<NavMeshObstacle>();
         obstacle.enabled = true;
     }

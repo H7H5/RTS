@@ -115,8 +115,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 4400078810160018031}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -447,7 +447,7 @@ RectTransform:
   m_Father: {fileID: 5473760227563200124}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -4.894989, y: 0}
   m_SizeDelta: {x: 0.21, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -649,7 +649,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6843106790353125364
 RectTransform:
   m_ObjectHideFlags: 0
@@ -737,7 +737,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ffcfbebeaf97aa4f9f533f915fbcfde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  facingCamera: {fileID: 0}
 --- !u!1 &6127657728578490874
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,6 +787,7 @@ MonoBehaviour:
   constMaxHealth: 100
   healthTracker: {fileID: 8809334189622055075}
   isEnemy: 1
+  buildingType: 1
 --- !u!65 &3834201789397760227
 BoxCollider:
   m_ObjectHideFlags: 0
