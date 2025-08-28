@@ -11,6 +11,8 @@ public class Constructable : MonoBehaviour, IDamageable
 
     public HealthTracker healthTracker;
 
+    public bool isEnemy = false;
+
     NavMeshObstacle obstacle;
 
     private void Start()
@@ -41,6 +43,10 @@ public class Constructable : MonoBehaviour, IDamageable
 
     private void ActivateObstacle()
     {
+        if (isEnemy)
+        {
+            gameObject.tag = "Enemy";
+        }
         obstacle = GetComponentInChildren<NavMeshObstacle>();
         obstacle.enabled = true;
     }
